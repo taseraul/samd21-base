@@ -1,0 +1,680 @@
+ARM GAS  /tmp/ccU9JOdZ.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 6
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"startup_samd21.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	exception_table
+  16              		.section	.vectors,"a"
+  17              		.align	2
+  20              	exception_table:
+  21 0000 00000000 		.word	_estack
+  22 0004 00000000 		.word	Reset_Handler
+  23 0008 00000000 		.word	NonMaskableInt_Handler
+  24 000c 00000000 		.word	HardFault_Handler
+  25 0010 00000000 		.word	0
+  26 0014 00000000 		.word	0
+  27 0018 00000000 		.word	0
+  28 001c 00000000 		.word	0
+  29 0020 00000000 		.word	0
+  30 0024 00000000 		.word	0
+  31 0028 00000000 		.word	0
+  32 002c 00000000 		.word	SVCall_Handler
+  33 0030 00000000 		.word	0
+  34 0034 00000000 		.word	0
+  35 0038 00000000 		.word	PendSV_Handler
+  36 003c 00000000 		.word	SysTick_Handler
+  37 0040 00000000 		.word	PM_Handler
+  38 0044 00000000 		.word	SYSCTRL_Handler
+  39 0048 00000000 		.word	WDT_Handler
+  40 004c 00000000 		.word	RTC_Handler
+  41 0050 00000000 		.word	EIC_Handler
+  42 0054 00000000 		.word	NVMCTRL_Handler
+  43 0058 00000000 		.word	DMAC_Handler
+  44 005c 00000000 		.word	USB_Handler
+  45 0060 00000000 		.word	EVSYS_Handler
+  46 0064 00000000 		.word	SERCOM0_Handler
+  47 0068 00000000 		.word	SERCOM1_Handler
+  48 006c 00000000 		.word	SERCOM2_Handler
+  49 0070 00000000 		.word	SERCOM3_Handler
+  50 0074 00000000 		.word	SERCOM4_Handler
+  51 0078 00000000 		.word	SERCOM5_Handler
+  52 007c 00000000 		.word	TCC0_Handler
+  53 0080 00000000 		.word	TCC1_Handler
+  54 0084 00000000 		.word	TCC2_Handler
+  55 0088 00000000 		.word	TC3_Handler
+  56 008c 00000000 		.word	TC4_Handler
+  57 0090 00000000 		.word	TC5_Handler
+  58 0094 00000000 		.word	0
+  59 0098 00000000 		.word	0
+ARM GAS  /tmp/ccU9JOdZ.s 			page 2
+
+
+  60 009c 00000000 		.word	ADC_Handler
+  61 00a0 00000000 		.word	AC_Handler
+  62 00a4 00000000 		.word	DAC_Handler
+  63 00a8 00000000 		.word	PTC_Handler
+  64 00ac 00000000 		.word	I2S_Handler
+  65 00b0 00000000 		.word	0
+  66              		.section	.text.Reset_Handler,"ax",%progbits
+  67              		.align	1
+  68              		.global	Reset_Handler
+  69              		.arch armv6s-m
+  70              		.syntax unified
+  71              		.code	16
+  72              		.thumb_func
+  73              		.fpu softvfp
+  75              	Reset_Handler:
+  76              	.LFB40:
+  77              		.file 1 "./src/startup_samd21.c"
+   1:./src/startup_samd21.c **** /**
+   2:./src/startup_samd21.c ****  * \file
+   3:./src/startup_samd21.c ****  *
+   4:./src/startup_samd21.c ****  * \brief gcc starttup file for SAMD21
+   5:./src/startup_samd21.c ****  *
+   6:./src/startup_samd21.c ****  * Copyright (c) 2018 Microchip Technology Inc.
+   7:./src/startup_samd21.c ****  *
+   8:./src/startup_samd21.c ****  * \asf_license_start
+   9:./src/startup_samd21.c ****  *
+  10:./src/startup_samd21.c ****  * \page License
+  11:./src/startup_samd21.c ****  *
+  12:./src/startup_samd21.c ****  * SPDX-License-Identifier: Apache-2.0
+  13:./src/startup_samd21.c ****  *
+  14:./src/startup_samd21.c ****  * Licensed under the Apache License, Version 2.0 (the "License"); you may
+  15:./src/startup_samd21.c ****  * not use this file except in compliance with the License.
+  16:./src/startup_samd21.c ****  * You may obtain a copy of the Licence at
+  17:./src/startup_samd21.c ****  * 
+  18:./src/startup_samd21.c ****  * http://www.apache.org/licenses/LICENSE-2.0
+  19:./src/startup_samd21.c ****  * 
+  20:./src/startup_samd21.c ****  * Unless required by applicable law or agreed to in writing, software
+  21:./src/startup_samd21.c ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  22:./src/startup_samd21.c ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  23:./src/startup_samd21.c ****  * See the License for the specific language governing permissions and
+  24:./src/startup_samd21.c ****  * limitations under the License.
+  25:./src/startup_samd21.c ****  *
+  26:./src/startup_samd21.c ****  * \asf_license_stop
+  27:./src/startup_samd21.c ****  *
+  28:./src/startup_samd21.c ****  */
+  29:./src/startup_samd21.c **** 
+  30:./src/startup_samd21.c **** #include "samd21.h"
+  31:./src/startup_samd21.c **** 
+  32:./src/startup_samd21.c **** /* Initialize segments */
+  33:./src/startup_samd21.c **** extern uint32_t _sfixed;
+  34:./src/startup_samd21.c **** extern uint32_t _efixed;
+  35:./src/startup_samd21.c **** extern uint32_t _etext;
+  36:./src/startup_samd21.c **** extern uint32_t _srelocate;
+  37:./src/startup_samd21.c **** extern uint32_t _erelocate;
+  38:./src/startup_samd21.c **** extern uint32_t _szero;
+  39:./src/startup_samd21.c **** extern uint32_t _ezero;
+  40:./src/startup_samd21.c **** extern uint32_t _sstack;
+ARM GAS  /tmp/ccU9JOdZ.s 			page 3
+
+
+  41:./src/startup_samd21.c **** extern uint32_t _estack;
+  42:./src/startup_samd21.c **** 
+  43:./src/startup_samd21.c **** /** \cond DOXYGEN_SHOULD_SKIP_THIS */
+  44:./src/startup_samd21.c **** int main(void);
+  45:./src/startup_samd21.c **** /** \endcond */
+  46:./src/startup_samd21.c **** 
+  47:./src/startup_samd21.c **** void __libc_init_array(void);
+  48:./src/startup_samd21.c **** 
+  49:./src/startup_samd21.c **** /* Default empty handler */
+  50:./src/startup_samd21.c **** void Dummy_Handler(void);
+  51:./src/startup_samd21.c **** 
+  52:./src/startup_samd21.c **** /* Cortex-M0+ core handlers */
+  53:./src/startup_samd21.c **** void NonMaskableInt_Handler  ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  54:./src/startup_samd21.c **** void HardFault_Handler       ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  55:./src/startup_samd21.c **** void SVCall_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  56:./src/startup_samd21.c **** void PendSV_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  57:./src/startup_samd21.c **** void SysTick_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  58:./src/startup_samd21.c **** 
+  59:./src/startup_samd21.c **** /* Peripherals handlers */
+  60:./src/startup_samd21.c **** void PM_Handler              ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  61:./src/startup_samd21.c **** void SYSCTRL_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  62:./src/startup_samd21.c **** void WDT_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  63:./src/startup_samd21.c **** void RTC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  64:./src/startup_samd21.c **** void EIC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  65:./src/startup_samd21.c **** void NVMCTRL_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  66:./src/startup_samd21.c **** void DMAC_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  67:./src/startup_samd21.c **** #ifdef ID_USB
+  68:./src/startup_samd21.c **** void USB_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  69:./src/startup_samd21.c **** #endif
+  70:./src/startup_samd21.c **** void EVSYS_Handler           ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  71:./src/startup_samd21.c **** void SERCOM0_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  72:./src/startup_samd21.c **** void SERCOM1_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  73:./src/startup_samd21.c **** void SERCOM2_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  74:./src/startup_samd21.c **** void SERCOM3_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  75:./src/startup_samd21.c **** #ifdef ID_SERCOM4
+  76:./src/startup_samd21.c **** void SERCOM4_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  77:./src/startup_samd21.c **** #endif
+  78:./src/startup_samd21.c **** #ifdef ID_SERCOM5
+  79:./src/startup_samd21.c **** void SERCOM5_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  80:./src/startup_samd21.c **** #endif
+  81:./src/startup_samd21.c **** void TCC0_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  82:./src/startup_samd21.c **** void TCC1_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  83:./src/startup_samd21.c **** void TCC2_Handler            ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  84:./src/startup_samd21.c **** void TC3_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  85:./src/startup_samd21.c **** void TC4_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  86:./src/startup_samd21.c **** void TC5_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  87:./src/startup_samd21.c **** #ifdef ID_TC6
+  88:./src/startup_samd21.c **** void TC6_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  89:./src/startup_samd21.c **** #endif
+  90:./src/startup_samd21.c **** #ifdef ID_TC7
+  91:./src/startup_samd21.c **** void TC7_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  92:./src/startup_samd21.c **** #endif
+  93:./src/startup_samd21.c **** #ifdef ID_ADC
+  94:./src/startup_samd21.c **** void ADC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+  95:./src/startup_samd21.c **** #endif
+  96:./src/startup_samd21.c **** #ifdef ID_AC
+  97:./src/startup_samd21.c **** void AC_Handler              ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+ARM GAS  /tmp/ccU9JOdZ.s 			page 4
+
+
+  98:./src/startup_samd21.c **** #endif
+  99:./src/startup_samd21.c **** #ifdef ID_DAC
+ 100:./src/startup_samd21.c **** void DAC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+ 101:./src/startup_samd21.c **** #endif
+ 102:./src/startup_samd21.c **** #ifdef ID_PTC
+ 103:./src/startup_samd21.c **** void PTC_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+ 104:./src/startup_samd21.c **** #endif
+ 105:./src/startup_samd21.c **** void I2S_Handler             ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+ 106:./src/startup_samd21.c **** 
+ 107:./src/startup_samd21.c **** /* Exception Table */
+ 108:./src/startup_samd21.c **** __attribute__ ((section(".vectors")))
+ 109:./src/startup_samd21.c **** const DeviceVectors exception_table = {
+ 110:./src/startup_samd21.c **** 
+ 111:./src/startup_samd21.c ****         /* Configure Initial Stack Pointer, using linker-generated symbols */
+ 112:./src/startup_samd21.c ****         .pvStack                = (void*) (&_estack),
+ 113:./src/startup_samd21.c **** 
+ 114:./src/startup_samd21.c ****         .pfnReset_Handler       = (void*) Reset_Handler,
+ 115:./src/startup_samd21.c ****         .pfnNonMaskableInt_Handler = (void*) NonMaskableInt_Handler,
+ 116:./src/startup_samd21.c ****         .pfnHardFault_Handler   = (void*) HardFault_Handler,
+ 117:./src/startup_samd21.c ****         .pvReservedM12          = (void*) (0UL), /* Reserved */
+ 118:./src/startup_samd21.c ****         .pvReservedM11          = (void*) (0UL), /* Reserved */
+ 119:./src/startup_samd21.c ****         .pvReservedM10          = (void*) (0UL), /* Reserved */
+ 120:./src/startup_samd21.c ****         .pvReservedM9           = (void*) (0UL), /* Reserved */
+ 121:./src/startup_samd21.c ****         .pvReservedM8           = (void*) (0UL), /* Reserved */
+ 122:./src/startup_samd21.c ****         .pvReservedM7           = (void*) (0UL), /* Reserved */
+ 123:./src/startup_samd21.c ****         .pvReservedM6           = (void*) (0UL), /* Reserved */
+ 124:./src/startup_samd21.c ****         .pfnSVCall_Handler      = (void*) SVCall_Handler,
+ 125:./src/startup_samd21.c ****         .pvReservedM4           = (void*) (0UL), /* Reserved */
+ 126:./src/startup_samd21.c ****         .pvReservedM3           = (void*) (0UL), /* Reserved */
+ 127:./src/startup_samd21.c ****         .pfnPendSV_Handler      = (void*) PendSV_Handler,
+ 128:./src/startup_samd21.c ****         .pfnSysTick_Handler     = (void*) SysTick_Handler,
+ 129:./src/startup_samd21.c **** 
+ 130:./src/startup_samd21.c ****         /* Configurable interrupts */
+ 131:./src/startup_samd21.c ****         .pfnPM_Handler          = (void*) PM_Handler,             /*  0 Power Manager */
+ 132:./src/startup_samd21.c ****         .pfnSYSCTRL_Handler     = (void*) SYSCTRL_Handler,        /*  1 System Control */
+ 133:./src/startup_samd21.c ****         .pfnWDT_Handler         = (void*) WDT_Handler,            /*  2 Watchdog Timer */
+ 134:./src/startup_samd21.c ****         .pfnRTC_Handler         = (void*) RTC_Handler,            /*  3 Real-Time Counter */
+ 135:./src/startup_samd21.c ****         .pfnEIC_Handler         = (void*) EIC_Handler,            /*  4 External Interrupt Controll
+ 136:./src/startup_samd21.c ****         .pfnNVMCTRL_Handler     = (void*) NVMCTRL_Handler,        /*  5 Non-Volatile Memory Control
+ 137:./src/startup_samd21.c ****         .pfnDMAC_Handler        = (void*) DMAC_Handler,           /*  6 Direct Memory Access Contro
+ 138:./src/startup_samd21.c **** #ifdef ID_USB
+ 139:./src/startup_samd21.c ****         .pfnUSB_Handler         = (void*) USB_Handler,            /*  7 Universal Serial Bus */
+ 140:./src/startup_samd21.c **** #else
+ 141:./src/startup_samd21.c ****         .pvReserved7            = (void*) (0UL),                  /*  7 Reserved */
+ 142:./src/startup_samd21.c **** #endif
+ 143:./src/startup_samd21.c ****         .pfnEVSYS_Handler       = (void*) EVSYS_Handler,          /*  8 Event System Interface */
+ 144:./src/startup_samd21.c ****         .pfnSERCOM0_Handler     = (void*) SERCOM0_Handler,        /*  9 Serial Communication Interf
+ 145:./src/startup_samd21.c ****         .pfnSERCOM1_Handler     = (void*) SERCOM1_Handler,        /* 10 Serial Communication Interf
+ 146:./src/startup_samd21.c ****         .pfnSERCOM2_Handler     = (void*) SERCOM2_Handler,        /* 11 Serial Communication Interf
+ 147:./src/startup_samd21.c ****         .pfnSERCOM3_Handler     = (void*) SERCOM3_Handler,        /* 12 Serial Communication Interf
+ 148:./src/startup_samd21.c **** #ifdef ID_SERCOM4
+ 149:./src/startup_samd21.c ****         .pfnSERCOM4_Handler     = (void*) SERCOM4_Handler,        /* 13 Serial Communication Interf
+ 150:./src/startup_samd21.c **** #else
+ 151:./src/startup_samd21.c ****         .pvReserved13           = (void*) (0UL),                  /* 13 Reserved */
+ 152:./src/startup_samd21.c **** #endif
+ 153:./src/startup_samd21.c **** #ifdef ID_SERCOM5
+ 154:./src/startup_samd21.c ****         .pfnSERCOM5_Handler     = (void*) SERCOM5_Handler,        /* 14 Serial Communication Interf
+ARM GAS  /tmp/ccU9JOdZ.s 			page 5
+
+
+ 155:./src/startup_samd21.c **** #else
+ 156:./src/startup_samd21.c ****         .pvReserved14           = (void*) (0UL),                  /* 14 Reserved */
+ 157:./src/startup_samd21.c **** #endif
+ 158:./src/startup_samd21.c ****         .pfnTCC0_Handler        = (void*) TCC0_Handler,           /* 15 Timer Counter Control 0 */
+ 159:./src/startup_samd21.c ****         .pfnTCC1_Handler        = (void*) TCC1_Handler,           /* 16 Timer Counter Control 1 */
+ 160:./src/startup_samd21.c ****         .pfnTCC2_Handler        = (void*) TCC2_Handler,           /* 17 Timer Counter Control 2 */
+ 161:./src/startup_samd21.c ****         .pfnTC3_Handler         = (void*) TC3_Handler,            /* 18 Basic Timer Counter 0 */
+ 162:./src/startup_samd21.c ****         .pfnTC4_Handler         = (void*) TC4_Handler,            /* 19 Basic Timer Counter 1 */
+ 163:./src/startup_samd21.c ****         .pfnTC5_Handler         = (void*) TC5_Handler,            /* 20 Basic Timer Counter 2 */
+ 164:./src/startup_samd21.c **** #ifdef ID_TC6
+ 165:./src/startup_samd21.c ****         .pfnTC6_Handler         = (void*) TC6_Handler,            /* 21 Basic Timer Counter 3 */
+ 166:./src/startup_samd21.c **** #else
+ 167:./src/startup_samd21.c ****         .pvReserved21           = (void*) (0UL),                  /* 21 Reserved */
+ 168:./src/startup_samd21.c **** #endif
+ 169:./src/startup_samd21.c **** #ifdef ID_TC7
+ 170:./src/startup_samd21.c ****         .pfnTC7_Handler         = (void*) TC7_Handler,            /* 22 Basic Timer Counter 4 */
+ 171:./src/startup_samd21.c **** #else
+ 172:./src/startup_samd21.c ****         .pvReserved22           = (void*) (0UL),                  /* 22 Reserved */
+ 173:./src/startup_samd21.c **** #endif
+ 174:./src/startup_samd21.c **** #ifdef ID_ADC
+ 175:./src/startup_samd21.c ****         .pfnADC_Handler         = (void*) ADC_Handler,            /* 23 Analog Digital Converter */
+ 176:./src/startup_samd21.c **** #else
+ 177:./src/startup_samd21.c ****         .pvReserved23           = (void*) (0UL),                  /* 23 Reserved */
+ 178:./src/startup_samd21.c **** #endif
+ 179:./src/startup_samd21.c **** #ifdef ID_AC
+ 180:./src/startup_samd21.c ****         .pfnAC_Handler          = (void*) AC_Handler,             /* 24 Analog Comparators */
+ 181:./src/startup_samd21.c **** #else
+ 182:./src/startup_samd21.c ****         .pvReserved24           = (void*) (0UL),                  /* 24 Reserved */
+ 183:./src/startup_samd21.c **** #endif
+ 184:./src/startup_samd21.c **** #ifdef ID_DAC
+ 185:./src/startup_samd21.c ****         .pfnDAC_Handler         = (void*) DAC_Handler,            /* 25 Digital Analog Converter */
+ 186:./src/startup_samd21.c **** #else
+ 187:./src/startup_samd21.c ****         .pvReserved25           = (void*) (0UL),                  /* 25 Reserved */
+ 188:./src/startup_samd21.c **** #endif
+ 189:./src/startup_samd21.c **** #ifdef ID_PTC
+ 190:./src/startup_samd21.c ****         .pfnPTC_Handler         = (void*) PTC_Handler,            /* 26 Peripheral Touch Controller
+ 191:./src/startup_samd21.c **** #else
+ 192:./src/startup_samd21.c ****         .pvReserved26           = (void*) (0UL),                  /* 26 Reserved */
+ 193:./src/startup_samd21.c **** #endif
+ 194:./src/startup_samd21.c ****         .pfnI2S_Handler         = (void*) I2S_Handler,            /* 27 Inter-IC Sound Interface */
+ 195:./src/startup_samd21.c ****         .pvReserved28           = (void*) (0UL)                   /* 28 Reserved */
+ 196:./src/startup_samd21.c **** };
+ 197:./src/startup_samd21.c **** 
+ 198:./src/startup_samd21.c **** /**
+ 199:./src/startup_samd21.c ****  * \brief This is the code that gets called on processor reset.
+ 200:./src/startup_samd21.c ****  * To initialize the device, and call the main() routine.
+ 201:./src/startup_samd21.c ****  */
+ 202:./src/startup_samd21.c **** void Reset_Handler(void)
+ 203:./src/startup_samd21.c **** {
+  78              		.loc 1 203 1
+  79              		.cfi_startproc
+  80              		@ args = 0, pretend = 0, frame = 8
+  81              		@ frame_needed = 1, uses_anonymous_args = 0
+  82 0000 80B5     		push	{r7, lr}
+  83              	.LCFI0:
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 7, -8
+ARM GAS  /tmp/ccU9JOdZ.s 			page 6
+
+
+  86              		.cfi_offset 14, -4
+  87 0002 82B0     		sub	sp, sp, #8
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 16
+  90 0004 00AF     		add	r7, sp, #0
+  91              	.LCFI2:
+  92              		.cfi_def_cfa_register 7
+ 204:./src/startup_samd21.c ****         uint32_t *pSrc, *pDest;
+ 205:./src/startup_samd21.c **** 
+ 206:./src/startup_samd21.c ****         /* Initialize the relocate segment */
+ 207:./src/startup_samd21.c ****         pSrc = &_etext;
+  93              		.loc 1 207 14
+  94 0006 2F4B     		ldr	r3, .L8
+  95 0008 7B60     		str	r3, [r7, #4]
+ 208:./src/startup_samd21.c ****         pDest = &_srelocate;
+  96              		.loc 1 208 15
+  97 000a 2F4B     		ldr	r3, .L8+4
+  98 000c 3B60     		str	r3, [r7]
+ 209:./src/startup_samd21.c **** 
+ 210:./src/startup_samd21.c ****         if (pSrc != pDest) {
+  99              		.loc 1 210 12
+ 100 000e 7A68     		ldr	r2, [r7, #4]
+ 101 0010 3B68     		ldr	r3, [r7]
+ 102 0012 9A42     		cmp	r2, r3
+ 103 0014 0CD0     		beq	.L2
+ 211:./src/startup_samd21.c ****                 for (; pDest < &_erelocate;) {
+ 104              		.loc 1 211 17
+ 105 0016 07E0     		b	.L3
+ 106              	.L4:
+ 212:./src/startup_samd21.c ****                         *pDest++ = *pSrc++;
+ 107              		.loc 1 212 41
+ 108 0018 7A68     		ldr	r2, [r7, #4]
+ 109 001a 131D     		adds	r3, r2, #4
+ 110 001c 7B60     		str	r3, [r7, #4]
+ 111              		.loc 1 212 31
+ 112 001e 3B68     		ldr	r3, [r7]
+ 113 0020 191D     		adds	r1, r3, #4
+ 114 0022 3960     		str	r1, [r7]
+ 115              		.loc 1 212 36
+ 116 0024 1268     		ldr	r2, [r2]
+ 117              		.loc 1 212 34
+ 118 0026 1A60     		str	r2, [r3]
+ 119              	.L3:
+ 211:./src/startup_samd21.c ****                 for (; pDest < &_erelocate;) {
+ 120              		.loc 1 211 17
+ 121 0028 3A68     		ldr	r2, [r7]
+ 122 002a 284B     		ldr	r3, .L8+8
+ 123 002c 9A42     		cmp	r2, r3
+ 124 002e F3D3     		bcc	.L4
+ 125              	.L2:
+ 213:./src/startup_samd21.c ****                 }
+ 214:./src/startup_samd21.c ****         }
+ 215:./src/startup_samd21.c **** 
+ 216:./src/startup_samd21.c ****         /* Clear the zero segment */
+ 217:./src/startup_samd21.c ****         for (pDest = &_szero; pDest < &_ezero;) {
+ 126              		.loc 1 217 20
+ 127 0030 274B     		ldr	r3, .L8+12
+ARM GAS  /tmp/ccU9JOdZ.s 			page 7
+
+
+ 128 0032 3B60     		str	r3, [r7]
+ 129              		.loc 1 217 9
+ 130 0034 04E0     		b	.L5
+ 131              	.L6:
+ 218:./src/startup_samd21.c ****                 *pDest++ = 0;
+ 132              		.loc 1 218 23
+ 133 0036 3B68     		ldr	r3, [r7]
+ 134 0038 1A1D     		adds	r2, r3, #4
+ 135 003a 3A60     		str	r2, [r7]
+ 136              		.loc 1 218 26
+ 137 003c 0022     		movs	r2, #0
+ 138 003e 1A60     		str	r2, [r3]
+ 139              	.L5:
+ 217:./src/startup_samd21.c ****                 *pDest++ = 0;
+ 140              		.loc 1 217 9 discriminator 1
+ 141 0040 3A68     		ldr	r2, [r7]
+ 142 0042 244B     		ldr	r3, .L8+16
+ 143 0044 9A42     		cmp	r2, r3
+ 144 0046 F6D3     		bcc	.L6
+ 219:./src/startup_samd21.c ****         }
+ 220:./src/startup_samd21.c **** 
+ 221:./src/startup_samd21.c ****         /* Set the vector table base address */
+ 222:./src/startup_samd21.c ****         pSrc = (uint32_t *) & _sfixed;
+ 145              		.loc 1 222 14
+ 146 0048 234B     		ldr	r3, .L8+20
+ 147 004a 7B60     		str	r3, [r7, #4]
+ 223:./src/startup_samd21.c ****         SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+ 148              		.loc 1 223 22
+ 149 004c 7A68     		ldr	r2, [r7, #4]
+ 150              		.loc 1 223 12
+ 151 004e 234B     		ldr	r3, .L8+24
+ 152              		.loc 1 223 38
+ 153 0050 FF21     		movs	r1, #255
+ 154 0052 8A43     		bics	r2, r1
+ 155              		.loc 1 223 19
+ 156 0054 9A60     		str	r2, [r3, #8]
+ 224:./src/startup_samd21.c **** 
+ 225:./src/startup_samd21.c ****         /* Change default QOS values to have the best performance and correct USB behaviour */
+ 226:./src/startup_samd21.c ****         SBMATRIX->SFR[SBMATRIX_SLAVE_HMCRAMC0].reg = 2;
+ 157              		.loc 1 226 17
+ 158 0056 224A     		ldr	r2, .L8+28
+ 159              		.loc 1 226 52
+ 160 0058 9023     		movs	r3, #144
+ 161 005a 5B00     		lsls	r3, r3, #1
+ 162 005c 0221     		movs	r1, #2
+ 163 005e D150     		str	r1, [r2, r3]
+ 227:./src/startup_samd21.c **** #if defined(ID_USB)
+ 228:./src/startup_samd21.c ****         USB->DEVICE.QOSCTRL.bit.CQOS = 2;
+ 164              		.loc 1 228 12
+ 165 0060 204A     		ldr	r2, .L8+32
+ 166              		.loc 1 228 38
+ 167 0062 D378     		ldrb	r3, [r2, #3]
+ 168 0064 0321     		movs	r1, #3
+ 169 0066 8B43     		bics	r3, r1
+ 170 0068 191C     		adds	r1, r3, #0
+ 171 006a 0223     		movs	r3, #2
+ 172 006c 0B43     		orrs	r3, r1
+ARM GAS  /tmp/ccU9JOdZ.s 			page 8
+
+
+ 173 006e D370     		strb	r3, [r2, #3]
+ 229:./src/startup_samd21.c ****         USB->DEVICE.QOSCTRL.bit.DQOS = 2;
+ 174              		.loc 1 229 12
+ 175 0070 1C4A     		ldr	r2, .L8+32
+ 176              		.loc 1 229 38
+ 177 0072 D378     		ldrb	r3, [r2, #3]
+ 178 0074 0C21     		movs	r1, #12
+ 179 0076 8B43     		bics	r3, r1
+ 180 0078 191C     		adds	r1, r3, #0
+ 181 007a 0823     		movs	r3, #8
+ 182 007c 0B43     		orrs	r3, r1
+ 183 007e D370     		strb	r3, [r2, #3]
+ 230:./src/startup_samd21.c **** #endif
+ 231:./src/startup_samd21.c ****         DMAC->QOSCTRL.bit.DQOS = 2;
+ 184              		.loc 1 231 13
+ 185 0080 194A     		ldr	r2, .L8+36
+ 186              		.loc 1 231 32
+ 187 0082 937B     		ldrb	r3, [r2, #14]
+ 188 0084 3021     		movs	r1, #48
+ 189 0086 8B43     		bics	r3, r1
+ 190 0088 191C     		adds	r1, r3, #0
+ 191 008a 2023     		movs	r3, #32
+ 192 008c 0B43     		orrs	r3, r1
+ 193 008e 9373     		strb	r3, [r2, #14]
+ 232:./src/startup_samd21.c ****         DMAC->QOSCTRL.bit.FQOS = 2;
+ 194              		.loc 1 232 13
+ 195 0090 154A     		ldr	r2, .L8+36
+ 196              		.loc 1 232 32
+ 197 0092 937B     		ldrb	r3, [r2, #14]
+ 198 0094 0C21     		movs	r1, #12
+ 199 0096 8B43     		bics	r3, r1
+ 200 0098 191C     		adds	r1, r3, #0
+ 201 009a 0823     		movs	r3, #8
+ 202 009c 0B43     		orrs	r3, r1
+ 203 009e 9373     		strb	r3, [r2, #14]
+ 233:./src/startup_samd21.c ****         DMAC->QOSCTRL.bit.WRBQOS = 2;
+ 204              		.loc 1 233 13
+ 205 00a0 114A     		ldr	r2, .L8+36
+ 206              		.loc 1 233 34
+ 207 00a2 937B     		ldrb	r3, [r2, #14]
+ 208 00a4 0321     		movs	r1, #3
+ 209 00a6 8B43     		bics	r3, r1
+ 210 00a8 191C     		adds	r1, r3, #0
+ 211 00aa 0223     		movs	r3, #2
+ 212 00ac 0B43     		orrs	r3, r1
+ 213 00ae 9373     		strb	r3, [r2, #14]
+ 234:./src/startup_samd21.c **** 
+ 235:./src/startup_samd21.c ****         /* Overwriting the default value of the NVMCTRL.CTRLB.MANW bit (errata reference 13134) */
+ 236:./src/startup_samd21.c ****         NVMCTRL->CTRLB.bit.MANW = 1;
+ 214              		.loc 1 236 16
+ 215 00b0 0E4A     		ldr	r2, .L8+40
+ 216              		.loc 1 236 33
+ 217 00b2 5368     		ldr	r3, [r2, #4]
+ 218 00b4 8021     		movs	r1, #128
+ 219 00b6 0B43     		orrs	r3, r1
+ 220 00b8 5360     		str	r3, [r2, #4]
+ 237:./src/startup_samd21.c **** 
+ARM GAS  /tmp/ccU9JOdZ.s 			page 9
+
+
+ 238:./src/startup_samd21.c ****         /* Initialize the C library */
+ 239:./src/startup_samd21.c ****         __libc_init_array();
+ 221              		.loc 1 239 9
+ 222 00ba FFF7FEFF 		bl	__libc_init_array
+ 240:./src/startup_samd21.c **** 
+ 241:./src/startup_samd21.c ****         /* Branch to main function */
+ 242:./src/startup_samd21.c ****         main();
+ 223              		.loc 1 242 9
+ 224 00be FFF7FEFF 		bl	main
+ 225              	.L7:
+ 243:./src/startup_samd21.c **** 
+ 244:./src/startup_samd21.c ****         /* Infinite loop */
+ 245:./src/startup_samd21.c ****         while (1);
+ 226              		.loc 1 245 15 discriminator 1
+ 227 00c2 FEE7     		b	.L7
+ 228              	.L9:
+ 229              		.align	2
+ 230              	.L8:
+ 231 00c4 00000000 		.word	_etext
+ 232 00c8 00000000 		.word	_srelocate
+ 233 00cc 00000000 		.word	_erelocate
+ 234 00d0 00000000 		.word	_szero
+ 235 00d4 00000000 		.word	_ezero
+ 236 00d8 00000000 		.word	_sfixed
+ 237 00dc 00ED00E0 		.word	-536810240
+ 238 00e0 00700041 		.word	1090547712
+ 239 00e4 00500041 		.word	1090539520
+ 240 00e8 00480041 		.word	1090537472
+ 241 00ec 00400041 		.word	1090535424
+ 242              		.cfi_endproc
+ 243              	.LFE40:
+ 245              		.section	.text.Dummy_Handler,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	Dummy_Handler
+ 248              		.syntax unified
+ 249              		.code	16
+ 250              		.thumb_func
+ 251              		.fpu softvfp
+ 253              	Dummy_Handler:
+ 254              	.LFB41:
+ 246:./src/startup_samd21.c **** }
+ 247:./src/startup_samd21.c **** 
+ 248:./src/startup_samd21.c **** /**
+ 249:./src/startup_samd21.c ****  * \brief Default interrupt handler for unused IRQs.
+ 250:./src/startup_samd21.c ****  */
+ 251:./src/startup_samd21.c **** void Dummy_Handler(void)
+ 252:./src/startup_samd21.c **** {
+ 255              		.loc 1 252 1
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 0
+ 258              		@ frame_needed = 1, uses_anonymous_args = 0
+ 259 0000 80B5     		push	{r7, lr}
+ 260              	.LCFI3:
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 7, -8
+ 263              		.cfi_offset 14, -4
+ 264 0002 00AF     		add	r7, sp, #0
+ARM GAS  /tmp/ccU9JOdZ.s 			page 10
+
+
+ 265              	.LCFI4:
+ 266              		.cfi_def_cfa_register 7
+ 267              	.L11:
+ 253:./src/startup_samd21.c ****         while (1) {
+ 268              		.loc 1 253 15 discriminator 1
+ 269 0004 FEE7     		b	.L11
+ 270              		.cfi_endproc
+ 271              	.LFE41:
+ 273              		.weak	I2S_Handler
+ 274              		.thumb_set I2S_Handler,Dummy_Handler
+ 275              		.weak	PTC_Handler
+ 276              		.thumb_set PTC_Handler,Dummy_Handler
+ 277              		.weak	DAC_Handler
+ 278              		.thumb_set DAC_Handler,Dummy_Handler
+ 279              		.weak	AC_Handler
+ 280              		.thumb_set AC_Handler,Dummy_Handler
+ 281              		.weak	ADC_Handler
+ 282              		.thumb_set ADC_Handler,Dummy_Handler
+ 283              		.weak	TC5_Handler
+ 284              		.thumb_set TC5_Handler,Dummy_Handler
+ 285              		.weak	TC4_Handler
+ 286              		.thumb_set TC4_Handler,Dummy_Handler
+ 287              		.weak	TC3_Handler
+ 288              		.thumb_set TC3_Handler,Dummy_Handler
+ 289              		.weak	TCC2_Handler
+ 290              		.thumb_set TCC2_Handler,Dummy_Handler
+ 291              		.weak	TCC1_Handler
+ 292              		.thumb_set TCC1_Handler,Dummy_Handler
+ 293              		.weak	TCC0_Handler
+ 294              		.thumb_set TCC0_Handler,Dummy_Handler
+ 295              		.weak	SERCOM5_Handler
+ 296              		.thumb_set SERCOM5_Handler,Dummy_Handler
+ 297              		.weak	SERCOM4_Handler
+ 298              		.thumb_set SERCOM4_Handler,Dummy_Handler
+ 299              		.weak	SERCOM3_Handler
+ 300              		.thumb_set SERCOM3_Handler,Dummy_Handler
+ 301              		.weak	SERCOM2_Handler
+ 302              		.thumb_set SERCOM2_Handler,Dummy_Handler
+ 303              		.weak	SERCOM1_Handler
+ 304              		.thumb_set SERCOM1_Handler,Dummy_Handler
+ 305              		.weak	SERCOM0_Handler
+ 306              		.thumb_set SERCOM0_Handler,Dummy_Handler
+ 307              		.weak	EVSYS_Handler
+ 308              		.thumb_set EVSYS_Handler,Dummy_Handler
+ 309              		.weak	USB_Handler
+ 310              		.thumb_set USB_Handler,Dummy_Handler
+ 311              		.weak	DMAC_Handler
+ 312              		.thumb_set DMAC_Handler,Dummy_Handler
+ 313              		.weak	NVMCTRL_Handler
+ 314              		.thumb_set NVMCTRL_Handler,Dummy_Handler
+ 315              		.weak	EIC_Handler
+ 316              		.thumb_set EIC_Handler,Dummy_Handler
+ 317              		.weak	RTC_Handler
+ 318              		.thumb_set RTC_Handler,Dummy_Handler
+ 319              		.weak	WDT_Handler
+ 320              		.thumb_set WDT_Handler,Dummy_Handler
+ 321              		.weak	SYSCTRL_Handler
+ARM GAS  /tmp/ccU9JOdZ.s 			page 11
+
+
+ 322              		.thumb_set SYSCTRL_Handler,Dummy_Handler
+ 323              		.weak	PM_Handler
+ 324              		.thumb_set PM_Handler,Dummy_Handler
+ 325              		.weak	SysTick_Handler
+ 326              		.thumb_set SysTick_Handler,Dummy_Handler
+ 327              		.weak	PendSV_Handler
+ 328              		.thumb_set PendSV_Handler,Dummy_Handler
+ 329              		.weak	SVCall_Handler
+ 330              		.thumb_set SVCall_Handler,Dummy_Handler
+ 331              		.weak	HardFault_Handler
+ 332              		.thumb_set HardFault_Handler,Dummy_Handler
+ 333              		.weak	NonMaskableInt_Handler
+ 334              		.thumb_set NonMaskableInt_Handler,Dummy_Handler
+ 335              		.text
+ 336              	.Letext0:
+ 337              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.07/arm-none-eabi/include/machine/_default_types.h"
+ 338              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.07/arm-none-eabi/include/sys/_stdint.h"
+ 339              		.file 4 "./lib/samd21a/samd21g18a.h"
+ 340              		.file 5 "./lib/CMSIS/Core/Include/core_cm0plus.h"
+ 341              		.file 6 "./lib/samd21a/component/dmac.h"
+ 342              		.file 7 "./lib/samd21a/component/hmatrixb.h"
+ 343              		.file 8 "./lib/samd21a/component/nvmctrl.h"
+ 344              		.file 9 "./lib/samd21a/component/usb.h"
+ARM GAS  /tmp/ccU9JOdZ.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 startup_samd21.c
+     /tmp/ccU9JOdZ.s:20     .vectors:0000000000000000 exception_table
+     /tmp/ccU9JOdZ.s:17     .vectors:0000000000000000 $d
+     /tmp/ccU9JOdZ.s:75     .text.Reset_Handler:0000000000000000 Reset_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 NonMaskableInt_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SVCall_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 PendSV_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 PM_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SYSCTRL_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 WDT_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 RTC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 EIC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 NVMCTRL_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 DMAC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 USB_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 EVSYS_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM0_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM1_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM2_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM3_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM4_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 SERCOM5_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TCC0_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TCC1_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TCC2_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TC3_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TC4_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 TC5_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 ADC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 AC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 DAC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 PTC_Handler
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 I2S_Handler
+     /tmp/ccU9JOdZ.s:67     .text.Reset_Handler:0000000000000000 $t
+     /tmp/ccU9JOdZ.s:231    .text.Reset_Handler:00000000000000c4 $d
+     /tmp/ccU9JOdZ.s:246    .text.Dummy_Handler:0000000000000000 $t
+     /tmp/ccU9JOdZ.s:253    .text.Dummy_Handler:0000000000000000 Dummy_Handler
+
+UNDEFINED SYMBOLS
+_estack
+__libc_init_array
+main
+_etext
+_srelocate
+_erelocate
+_szero
+_ezero
+_sfixed

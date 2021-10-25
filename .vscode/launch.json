@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}",
+            // "runToEntryPoint": "APPHW_Init",
+            "executable": "./build/source.elf",
+            "name": "Debug Microcontroller",
+            "device": "ATSAMD20G18",
+            "v1": true,
+            "configFiles": [
+                "/interface/cmsis-dap.cfg",
+                "target/at91samdXX.cfg"
+            ],
+            "svdFile": "${workspaceRoot}/init/svd/ATSAMD21G18A.svd",
+            "swoConfig":{
+                "enabled":true,
+                "source":"probe",
+                "swoFrequency": 200000,
+                "cpuFrequency":16000000,
+                "decoders": [
+                    {
+                        "port": 0,
+                        "type": "console",
+                        "label": "SWO output",
+                        "encoding":"ascii"
+                    }
+                ]
+            },
+        }
+    ]
+}
