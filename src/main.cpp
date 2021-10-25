@@ -7,7 +7,6 @@
 
 #include "sam.h"
 
-
 int main(void)
 {
     /* Replace with your application code */
